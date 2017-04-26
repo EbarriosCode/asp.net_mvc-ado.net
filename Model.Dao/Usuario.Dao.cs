@@ -109,6 +109,33 @@ namespace Model.Dao
 
             return respuesta;
         }
-			
+
+        // actualizar un usuario
+        public bool editarUsuario(Usuario usuario)
+        {
+            bool respuesta = false;
+
+            try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                {
+                    var query = new SqlCommand("UPDATE usuarios SET nombre=@p1, apellido=@p2, fechaNacimiento=@p3 WHERE id=@p0)", conn);
+                    query.Parameters.AddWithValue("@p0", usuario.id);
+                    query.Parameters.AddWithValue("@p1", usuario.nombre);
+                    query.Parameters.AddWithValue("@p2", usuario.apellido);
+                    query.Parameters.AddWithValue("@p3", usuario.fechaNacimiento);
+
+                    query.ExecuteNonQuery();
+
+                    respuesta = true;
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            return respuesta;
+        }
     }
 }
