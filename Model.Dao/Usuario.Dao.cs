@@ -11,13 +11,53 @@ namespace Model.Dao
 {
     public class UsuarioDao
     {
-		public UsuarioDao getUsuario(int id)
+		// obtener todos los usuarios de la bd
+		public List<Usuario> listarUsuarios()
+        {
+            var usuarios = new List<Usuario>();
+
+			try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
+                {
+                    conn.Open();
+                    var query = new SqlCommand();
+
+                    using (var data = query.ExecuteReader())
+                    {
+						while(data.Read())
+                        {
+                            // agregar el usuario al objeto lista
+                            var user = new Usuario
+								{
+									id = Convert.ToInt32(data["id"]),
+									nombre = data["nombre"].ToString(),
+									apellido = data["apellido"].ToString(),
+									fechaNacimiento = Convert.ToDateTime(data["fechaNacimiento"])
+								};
+
+                            usuarios.Add(user);
+                        }
+                    }
+
+                }
+            }
+			catch(Exception e)
+            {
+                throw;
+            }
+
+            return usuarios;
+        }
+
+		// obtener un usuario
+		public Usuario getUsuario(int id)
         {
             var usuario = new Usuario();
 
 			try
             {
-                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mvc-ado.net"].ToString()))
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     var query = new SqlCommand("SELECT * FROM usuarios WHERE id = @id", conn);
                     query.Parameters.AddWithValue("@id", id);
@@ -40,9 +80,35 @@ namespace Model.Dao
                 throw;
             }
 
-            return null;
+            return usuario;
         }
 
-		
+		// insertar un usuario
+		public bool crearUsuario(Usuario usuario)
+        {
+            bool respuesta = false;
+
+			try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                {
+                    var query = new SqlCommand("INSERT INTO usuarios(nombre,apellido,fechaNacimiento) VALUES (@p1,@p2,@p3)",conn);
+                    query.Parameters.AddWithValue("@p1", usuario.nombre);
+                    query.Parameters.AddWithValue("@p2", usuario.apellido);
+                    query.Parameters.AddWithValue("@p3", usuario.fechaNacimiento);
+
+                    query.ExecuteNonQuery();
+
+                    respuesta = true;
+                }
+            }
+			catch(Exception e)
+            {
+                throw;
+            }
+
+            return respuesta;
+        }
+			
     }
 }
