@@ -12,5 +12,12 @@ namespace Model.Entity
         public string nombre { get; set; }
         public string apellido { get; set; }
         public DateTime fechaNacimiento { get; set; }
+        public int idRol { get; set; }
+        public Rol Rol { get; set; }
+
+        public Usuario()
+        {
+            Rol = new Rol();
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Model.Dao
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     conn.Open();
-                    var query = new SqlCommand("SELECT * FROM usuarios",conn);
+                    var query = new SqlCommand("execute getUsuarios", conn);
 
                     using (var data = query.ExecuteReader())
                     {
@@ -29,14 +29,32 @@ namespace Model.Dao
                         {
                             // agregar el usuario al objeto lista
                             var user = new Usuario
-								{
-									id = Convert.ToInt32(data["id"]),
-									nombre = data["nombre"].ToString(),
-									apellido = data["apellido"].ToString(),
-									fechaNacimiento = Convert.ToDateTime(data["fechaNacimiento"])
+                            {
+                                id = Convert.ToInt32(data["idUsuario"]),
+                                nombre = data["nombre"].ToString(),
+                                apellido = data["apellido"].ToString(),
+                                fechaNacimiento = Convert.ToDateTime(data["fechaNacimiento"]),
+                                idRol = Convert.ToInt32(data["idRol"])
 								};
 
                             usuarios.Add(user);
+                        }
+                    }
+
+                    // agregamos el rol
+                    foreach(var rol in usuarios)
+                    {
+                        query = new SqlCommand("select * from Roles where idRol = @id", conn);
+                        query.Parameters.AddWithValue("@id", rol.idRol);
+
+                        using (var read = query.ExecuteReader())
+                        {
+                            read.Read();
+                            if(read.HasRows)
+                            {
+                                rol.Rol.idRol = Convert.ToInt32(read["idRol"]);
+                                rol.Rol.nombreRol = read["nombreRol"].ToString();
+                            }
                         }
                     }
 
