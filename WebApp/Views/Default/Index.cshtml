@@ -1,7 +1,29 @@
-﻿
+﻿@model List<Model.Entity.Usuario>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Usuarios";
 }
 
-<h2>Index</h2>
+<h2>Usuarios</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de Nacimiento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.nombre</td>
+                <td>@item.apellido</td>
+                <td>@item.fechaNacimiento</td>
+            </tr>
+        }
+    </tbody>
+    
+</table>

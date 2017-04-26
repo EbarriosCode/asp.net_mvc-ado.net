@@ -21,7 +21,7 @@ namespace Model.Dao
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     conn.Open();
-                    var query = new SqlCommand();
+                    var query = new SqlCommand("SELECT * FROM usuarios",conn);
 
                     using (var data = query.ExecuteReader())
                     {

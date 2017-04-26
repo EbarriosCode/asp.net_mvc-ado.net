@@ -48,3 +48,5 @@ C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\M
 C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\Model.Logic.dll
 C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\Model.Entity.pdb
 C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\Model.Logic.pdb
+C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\Model.Dao.dll
+C:\Users\Ebarrios\Documents\Visual Studio 2015\Projects\MVC-ADO.NET\WebApp\bin\Model.Dao.pdb
