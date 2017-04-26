@@ -137,5 +137,30 @@ namespace Model.Dao
 
             return respuesta;
         }
+
+		// eliminar un usuario
+		public bool eliminarUsuario(int id)
+        {
+            var respuesta = false;
+
+			try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                {
+                    var query = new SqlCommand("DELETE FROM usuarios WHERE id = @p0", conn);
+                    query.Parameters.AddWithValue("@p0", id);
+                    query.ExecuteNonQuery();
+
+                    respuesta = true;
+                }
+            }
+			catch(Exception ex)
+            {
+                throw;
+            }
+
+            return respuesta;
+        }
+
     }
 }
