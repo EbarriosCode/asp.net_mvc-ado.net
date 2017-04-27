@@ -27,7 +27,7 @@
                 <td>@item.Rol.nombreRol</td>
                 <td>
                     <a href=@Url.Action("Editar/"+@item.id) class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href=@Url.Action("Eliminar/"+@item.id) class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a href=@Url.Action("Eliminar/"+@item.id) onclick="return confirm('Esta seguro de eliminar ?');" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
         }

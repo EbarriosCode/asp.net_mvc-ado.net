@@ -77,7 +77,8 @@ namespace Model.Dao
             {
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
-                    var query = new SqlCommand("SELECT * FROM usuarios WHERE id = @id", conn);
+                    conn.Open();
+                    var query = new SqlCommand("SELECT * FROM usuarios WHERE idUsuario = @id", conn);
                     query.Parameters.AddWithValue("@id", id);
 
                     using (var data = query.ExecuteReader())
@@ -85,10 +86,11 @@ namespace Model.Dao
                         data.Read();
 						if(data.HasRows)
                         {
-                            usuario.id = Convert.ToInt32(data["id"]);
+                            usuario.id = Convert.ToInt32(data["idUsuario"]);
                             usuario.nombre = data["nombre"].ToString();
                             usuario.apellido = data["apellido"].ToString();
                             usuario.fechaNacimiento = Convert.ToDateTime(data["fechaNacimiento"]);
+                            usuario.idRol = Convert.ToInt32(data["idRol"]);
                         }
                     }
                 }
@@ -110,10 +112,12 @@ namespace Model.Dao
             {
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
                 {
-                    var query = new SqlCommand("INSERT INTO usuarios(nombre,apellido,fechaNacimiento) VALUES (@p1,@p2,@p3)",conn);
+                    conn.Open();
+                    var query = new SqlCommand("INSERT INTO usuarios(nombre,apellido,fechaNacimiento,idRol) VALUES (@p1,@p2,@p3,@p4)",conn);
                     query.Parameters.AddWithValue("@p1", usuario.nombre);
                     query.Parameters.AddWithValue("@p2", usuario.apellido);
                     query.Parameters.AddWithValue("@p3", usuario.fechaNacimiento);
+                    query.Parameters.AddWithValue("@p4", usuario.idRol);
 
                     query.ExecuteNonQuery();
 
@@ -137,11 +141,13 @@ namespace Model.Dao
             {
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
                 {
-                    var query = new SqlCommand("UPDATE usuarios SET nombre=@p1, apellido=@p2, fechaNacimiento=@p3 WHERE id=@p0)", conn);
+                    conn.Open();
+                    var query = new SqlCommand("UPDATE usuarios SET nombre=@p1, apellido=@p2, fechaNacimiento=@p3 idRol=@p4 WHERE idUsuario=@p0)", conn);
                     query.Parameters.AddWithValue("@p0", usuario.id);
                     query.Parameters.AddWithValue("@p1", usuario.nombre);
                     query.Parameters.AddWithValue("@p2", usuario.apellido);
                     query.Parameters.AddWithValue("@p3", usuario.fechaNacimiento);
+                    query.Parameters.AddWithValue("@p4", usuario.idRol);
 
                     query.ExecuteNonQuery();
 
@@ -150,7 +156,8 @@ namespace Model.Dao
             }
             catch (Exception e)
             {
-                throw;
+                Console.WriteLine("{0} Exception encontrada "+e);
+                //throw;
             }
 
             return respuesta;
@@ -165,7 +172,8 @@ namespace Model.Dao
             {
                 using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
                 {
-                    var query = new SqlCommand("DELETE FROM usuarios WHERE id = @p0", conn);
+                    conn.Open();
+                    var query = new SqlCommand("DELETE FROM usuarios WHERE idUsuario = @p0", conn);
                     query.Parameters.AddWithValue("@p0", id);
                     query.ExecuteNonQuery();
 
