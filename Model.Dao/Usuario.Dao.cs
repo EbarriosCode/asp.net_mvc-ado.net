@@ -110,7 +110,7 @@ namespace Model.Dao
 
 			try
             {
-                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     conn.Open();
                     var query = new SqlCommand("INSERT INTO usuarios(nombre,apellido,fechaNacimiento,idRol) VALUES (@p1,@p2,@p3,@p4)",conn);
@@ -126,7 +126,7 @@ namespace Model.Dao
             }
 			catch(Exception e)
             {
-                throw;
+               
             }
 
             return respuesta;
@@ -139,10 +139,10 @@ namespace Model.Dao
 
             try
             {
-                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     conn.Open();
-                    var query = new SqlCommand("UPDATE usuarios SET nombre=@p1, apellido=@p2, fechaNacimiento=@p3 idRol=@p4 WHERE idUsuario=@p0)", conn);
+                    var query = new SqlCommand("UPDATE usuarios SET nombre=@p1, apellido=@p2, fechaNacimiento=@p3, idRol=@p4 WHERE idUsuario=@p0", conn);
                     query.Parameters.AddWithValue("@p0", usuario.id);
                     query.Parameters.AddWithValue("@p1", usuario.nombre);
                     query.Parameters.AddWithValue("@p2", usuario.apellido);
@@ -156,8 +156,8 @@ namespace Model.Dao
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Exception encontrada "+e);
-                //throw;
+                //Console.WriteLine("{0} Exception encontrada "+e);
+                throw;
             }
 
             return respuesta;
@@ -170,7 +170,7 @@ namespace Model.Dao
 
 			try
             {
-                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-contexto"].ToString()))
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion-context"].ToString()))
                 {
                     conn.Open();
                     var query = new SqlCommand("DELETE FROM usuarios WHERE idUsuario = @p0", conn);

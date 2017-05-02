@@ -27,20 +27,36 @@ namespace WebApp.Controllers
 
         public ActionResult Guardar(Usuario user)
         {
-            try
+            //int registro = 0;            
+            if (ModelState.IsValid)
             {
-                var registro = user.id > 0 ?
-                          userLogic.editarUsuario(user) :
-                          userLogic.crearUsuario(user);
+                if (user.id > 0)
+                    userLogic.editarUsuario(user);
+
+                else
+                    userLogic.crearUsuario(user);
 
                 return Redirect("~/");
             }
-            catch (Exception ex)
+
+            else
             {
-                return View("Error");
-            }       
+                //ViewBag.Error = user.id+" "+user.nombre + " " + user.apellido + " " + user.fechaNacimiento+" "+user.idRol;
+                ViewBag.Error = "Ha ocurrido un error";
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
         }
 
+        public ActionResult Eliminar(int id)
+        {
+            var resultado = userLogic.eliminarUsuario(id);
 
+            if(!resultado)
+            {
+                ViewBag.Error = "Ha ocurrido un error";
+                return View("~/Views/Shared/_Mensajes.cshtml");
+            }
+            return Redirect("~/");
+        }
     }
 }

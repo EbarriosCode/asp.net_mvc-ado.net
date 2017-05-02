@@ -10,29 +10,34 @@
 {
     @Html.HiddenFor(x => x.id)
 
-    <div class="form-group">
-        <label>Nombre:</label>
+    <div class="form-group">        
+        @Html.LabelFor( x => x.nombre)
         @Html.TextBoxFor(x => x.nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.nombre,null, new {@class = "label label-danger" })
     </div>
 
     <div class="form-group">
-        <label>Apellido:</label>
+        @Html.LabelFor(x => x.apellido)
         @Html.TextBoxFor(x => x.apellido, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.apellido, null, new { @class = "label label-danger" })
     </div>
 
     <div class="form-group">
-        <label>Fecha de Nacimiento:</label>
+        @Html.LabelFor(x => x.fechaNacimiento)
         @Html.TextBoxFor(x => x.fechaNacimiento, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.fechaNacimiento, null, new { @class = "label label-danger" })
     </div>
 
     <div class="form-group">
-        <label>Rol Usuario:</label>
-        <select class="form-control">
+        @Html.LabelFor(x => x.idRol)
+        <select name="idRol" class="form-control">
+            <!--<option value="0">Selecciona:</option>-->
             @foreach (var r in roles)
             {
                 <option @(r.idRol == Model.idRol ? "selected" : "") value="@r.idRol">@r.nombreRol</option>
             }
         </select>
+        @Html.ValidationMessageFor(x => x.idRol, null, new { @class = "label label-danger" })
     </div>
 
     <input type="submit" class="btn btn-info"/>
